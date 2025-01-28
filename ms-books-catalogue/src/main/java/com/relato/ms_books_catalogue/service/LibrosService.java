@@ -20,6 +20,10 @@ public class LibrosService {
     }
 
     public Libros addBook(Libros libros) {
+        boolean exists = repository.existsByTituloAndAutor(libros.getTitulo(), libros.getAutor());
+        if (exists) {
+            throw new BookNotFoundException("Libro, su titulo y autor ya existen.");
+        }
         return repository.save(libros);
     }
 
@@ -37,7 +41,7 @@ public class LibrosService {
         if (libro.isPresent()) {
             return libro.get();
         } else {
-            throw new BookNotFoundException("Book not found with id: " + id);
+            throw new BookNotFoundException("Libro no encontrado con este id: " + id);
         }
     }
 

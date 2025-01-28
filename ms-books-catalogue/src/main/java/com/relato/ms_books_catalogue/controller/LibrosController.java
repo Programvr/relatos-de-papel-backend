@@ -22,8 +22,13 @@ public class LibrosController {
     }
 
     @PostMapping
-    public Libros addBook(@RequestBody Libros libros) {
-        return service.addBook(libros);
+    public ResponseEntity<String> addBook(@RequestBody Libros libros) {
+        try {
+            service.addBook(libros);
+            return ResponseEntity.ok("Libro registrado correctamente.");
+        } catch (BookNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @GetMapping("/search")
