@@ -1,5 +1,6 @@
 package com.relato.ms_books_catalogue.controller;
 
+import com.relato.ms_books_catalogue.exception.BookNotFoundException;
 import com.relato.ms_books_catalogue.model.Libros;
 import com.relato.ms_books_catalogue.service.LibrosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class LibrosController {
         service.deleteBook(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/cantidad")
     public ResponseEntity<Integer> getBookQuantityById(@PathVariable Long id) {
-    return service.getBookById(id)
+    return service.getBookQuantityById(id)
                   .map(ResponseEntity::ok)
                   .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(0));
     }
@@ -45,5 +46,15 @@ public class LibrosController {
     @PutMapping("/{id}/cantidad")
     public void updateBookQuantity(@PathVariable Long id, @RequestParam Integer cantidad) {
          service.updateBookQuantity(id, cantidad);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Libros> getBookById(@PathVariable Long id) {
+        try {
+            Libros libro = service.getBookById(id);
+            return ResponseEntity.ok(libro);
+        } catch (BookNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }

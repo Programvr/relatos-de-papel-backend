@@ -34,7 +34,7 @@ public class ComprasService {
         if (instance == null) {
             throw new RuntimeException("No instances of MS-BOOKS-CATALOGUE found");
         }
-        String url = instance.getUri().toString() + "/libros/" + libroId;
+        String url = instance.getUri().toString() + "/libros/" + libroId + "/cantidad";
         stockDisponible = restTemplate.getForObject(url, Long.class);
         return cantidad <= stockDisponible;
     }
