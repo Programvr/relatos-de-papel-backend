@@ -13,7 +13,8 @@ public class Libros {
     private String isbn;
     private Double valoracion;
     private Boolean visibilidad;
-    private Integer cantidad; // Nuevo campo para la cantidad de libros disponibles
+    private Integer cantidad;
+    private Double precio; 
 
     // Getters y setters
     public Long getId() {
@@ -78,5 +79,13 @@ public class Libros {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 }

@@ -12,8 +12,7 @@ import java.util.List;
 public interface LibrosRepository extends JpaRepository<Libros, Long> {
     @Query("SELECT l FROM Libros l WHERE LOWER(l.titulo) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
            "OR LOWER(l.autor) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-           "OR LOWER(l.genero) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-           "OR LOWER(l.isbn) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+           "OR LOWER(l.genero) LIKE LOWER(CONCAT('%', :keyword, '%')) ")
     List<Libros> searchBooks(@Param("keyword") String keyword);
 
     boolean existsByTituloAndAutor(String titulo, String autor);
