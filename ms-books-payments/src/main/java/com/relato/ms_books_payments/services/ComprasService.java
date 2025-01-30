@@ -1,7 +1,8 @@
-package com.relato.ms_books_payments.service;
+package com.relato.ms_books_payments.services;
 
-import com.relato.ms_books_payments.model.Compras;
-import com.relato.ms_books_payments.repository.ComprasRepository;
+import com.relato.ms_books_payments.models.Compras;
+import com.relato.ms_books_payments.repositorys.ComprasRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;

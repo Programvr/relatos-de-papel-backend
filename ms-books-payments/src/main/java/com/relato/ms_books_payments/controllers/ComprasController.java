@@ -1,7 +1,8 @@
-package com.relato.ms_books_payments.controller;
+package com.relato.ms_books_payments.controllers;
 
-import com.relato.ms_books_payments.model.Compras;
-import com.relato.ms_books_payments.service.ComprasService;
+import com.relato.ms_books_payments.models.Compras;
+import com.relato.ms_books_payments.services.ComprasService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

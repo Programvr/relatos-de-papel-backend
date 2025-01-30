@@ -1,8 +1,9 @@
-package com.relato.ms_books_catalogue.service;
+package com.relato.ms_books_catalogue.services;
 
-import com.relato.ms_books_catalogue.exception.BookNotFoundException;
-import com.relato.ms_books_catalogue.model.Libros;
-import com.relato.ms_books_catalogue.repository.LibrosRepository;
+import com.relato.ms_books_catalogue.exceptions.BookNotFoundException;
+import com.relato.ms_books_catalogue.models.Libros;
+import com.relato.ms_books_catalogue.repositorys.LibrosRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

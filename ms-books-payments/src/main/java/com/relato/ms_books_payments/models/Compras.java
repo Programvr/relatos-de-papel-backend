@@ -1,4 +1,4 @@
-package com.relato.ms_books_payments.model;
+package com.relato.ms_books_payments.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

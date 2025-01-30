@@ -1,4 +1,4 @@
-package com.relato.ms_books_catalogue.model;
+package com.relato.ms_books_catalogue.models;
 
 import jakarta.persistence.*;
 
