@@ -32,9 +32,10 @@ public class LibrosService {
         return repository.searchBooks(keyword);
     }
 
-    public Optional<Integer> getBookQuantityById(Long id) {
+    public Integer getBookQuantityById(Long id) {
         return repository.findById(id)
-                         .map(Libros::getCantidad);
+                         .map(Libros::getCantidad)
+                         .orElse(0);
     }
 
     public Libros getBookById(Long id) {

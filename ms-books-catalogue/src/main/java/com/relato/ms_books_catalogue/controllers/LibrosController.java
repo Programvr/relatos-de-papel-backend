@@ -44,9 +44,8 @@ public class LibrosController {
 
     @GetMapping("/{id}/cantidad")
     public ResponseEntity<Integer> getBookQuantityById(@PathVariable Long id) {
-    return service.getBookQuantityById(id)
-                  .map(ResponseEntity::ok)
-                  .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(0));
+        Integer cantidad = service.getBookQuantityById(id);
+        return ResponseEntity.ok(cantidad);
     }
 
     @PutMapping("/{id}/cantidad")
