@@ -1,5 +1,6 @@
 package com.relato.ms_books_auth.services;
 
+import com.relato.ms_books_auth.exceptions.UsuarioException;
 import com.relato.ms_books_auth.models.Usuarios;
 import com.relato.ms_books_auth.repositorys.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,20 @@ public class AutenticacionesService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public Usuarios registrarUsuario(Usuarios usuarios) {
+        if (usuariosRepository.existsByCorreo(usuarios.getCorreo())) {
+            throw new UsuarioException("El correo ya está registrado");
+        }
         usuarios.setContrasena(passwordEncoder.encode(usuarios.getContrasena()));
         return usuariosRepository.save(usuarios);
     }
 
     public Optional<Usuarios> loginUsuario(String correo, String contrasena) {
-        Optional<Usuarios> usuarios = usuariosRepository.findByCorreo(correo);
-        if (usuarios.isPresent() && passwordEncoder.matches(contrasena, usuarios.get().getContrasena())) {
-            return usuarios;
+        Optional<Usuarios> usuario = usuariosRepository.findByCorreo(correo);
+        if (usuario.isEmpty()) {
+            throw new UsuarioException("El usuario no existe");
+        }
+        if (passwordEncoder.matches(contrasena, usuario.get().getContrasena())) {
+            return usuario;
         }
         return Optional.empty();
     }

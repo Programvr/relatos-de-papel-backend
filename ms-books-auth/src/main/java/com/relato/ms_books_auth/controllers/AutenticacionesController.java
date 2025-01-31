@@ -1,5 +1,6 @@
 package com.relato.ms_books_auth.controllers;
 
+import com.relato.ms_books_auth.exceptions.UsuarioException;
 import com.relato.ms_books_auth.models.Usuarios;
 import com.relato.ms_books_auth.services.AutenticacionesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,20 @@ public class AutenticacionesController {
 
     @PostMapping("/registrar")
     public ResponseEntity<?> registrar(@RequestBody Usuarios usuarios) {
-        return ResponseEntity.ok(autenticacionesService.registrarUsuario(usuarios));
+        try {
+            return ResponseEntity.ok(autenticacionesService.registrarUsuario(usuarios));
+        } catch (UsuarioException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String correo, @RequestParam String contrasena) {
-        Optional<Usuarios> usuarios = autenticacionesService.loginUsuario(correo, contrasena);
-        return usuarios.isPresent() ? ResponseEntity.ok(usuarios.get()) : ResponseEntity.status(401).body("Invalid credentials");
+        try {
+            Optional<Usuarios> usuarios = autenticacionesService.loginUsuario(correo, contrasena);
+            return usuarios.isPresent() ? ResponseEntity.ok(usuarios.get()) : ResponseEntity.status(401).body("Credenciales invalidas");
+        } catch (UsuarioException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 }
