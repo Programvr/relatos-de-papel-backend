@@ -12,6 +12,7 @@ public class Compras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long usuarioId;
     private Long libroId;
     private Long cantidad;
     private LocalDate compraFecha;
@@ -22,6 +23,14 @@ public class Compras {
     
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public Long getLibroId() {

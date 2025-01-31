@@ -20,6 +20,10 @@ public class ComprasController {
             return ResponseEntity.badRequest().body("Compra no válida");
         }
 
+        if (!compraService.verificarUsuario(compras.getUsuarioId())) {
+            return ResponseEntity.badRequest().body("Usuario no válido");
+        }
+
         if (!compraService.verificarStock(compras.getLibroId(),compras.getCantidad())) {
             return ResponseEntity.badRequest().body("Stock no disponible");
         }

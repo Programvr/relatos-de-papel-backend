@@ -34,4 +34,10 @@ public class AutenticacionesController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Boolean> getUsuarioById(@PathVariable Long id) {
+        boolean exists = autenticacionesService.getUsuarioById(id).isPresent();
+        return ResponseEntity.ok(exists);
+    }
 }

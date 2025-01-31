@@ -36,4 +36,8 @@ public class AutenticacionesService {
         }
         return Optional.empty();
     }
+
+    public Optional<Usuarios> getUsuarioById(Long id) {
+        return usuariosRepository.findById(id);
+    }
 }

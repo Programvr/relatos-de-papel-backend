@@ -27,7 +27,16 @@ public class ComprasService {
     private Long stockDisponible;
 
     public boolean validarCompra(Compras compras) {
-        return compras.getLibroId() != null && compras.getCompraFecha() != null;
+        return compras.getUsuarioId() != null && compras.getLibroId() != null && compras.getCantidad() != null && compras.getCompraFecha() != null;
+    }
+    
+    public boolean verificarUsuario(Long usuarioId) {
+        ServiceInstance instance = discoveryClient.getInstances("CLOUD-GATEWAY").stream().findFirst().orElse(null);
+        if (instance == null) {
+            throw new RuntimeException("No instances of CLOUD-GATEWAY found");
+        }
+        String url = instance.getUri().toString() + "/autenticacion/" + usuarioId;
+        return restTemplate.getForObject(url, Boolean.class);
     }
     
     public boolean verificarStock(Long libroId, Long cantidad) {
@@ -37,7 +46,6 @@ public class ComprasService {
         }
         String url = instance.getUri().toString() + "/libros/" + libroId + "/cantidad";
         stockDisponible = restTemplate.getForObject(url, Long.class);
-        System.out.println("Stock disponible: " + stockDisponible);
         return cantidad <= stockDisponible;
     }
     
