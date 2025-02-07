@@ -1,8 +1,8 @@
 package com.relato.ms_books_auth.controllers;
 
 import com.relato.ms_books_auth.exceptions.UsuarioException;
-import com.relato.ms_books_auth.models.Usuarios;
-import com.relato.ms_books_auth.services.AutenticacionesService;
+import com.relato.ms_books_auth.models.Usuario;
+import com.relato.ms_books_auth.services.AutenticacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +11,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/autenticacion")
-public class AutenticacionesController {
+public class AutenticacionController {
 
     @Autowired
-    private AutenticacionesService autenticacionesService;
+    private AutenticacionService autenticacionesService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<?> registrar(@RequestBody Usuarios usuarios) {
+    public ResponseEntity<?> registrar(@RequestBody Usuario usuario) {
         try {
-            return ResponseEntity.ok(autenticacionesService.registrarUsuario(usuarios));
+            return ResponseEntity.ok(autenticacionesService.registrarUsuario(usuario));
         } catch (UsuarioException e) {
             return ResponseEntity.status(409).body(e.getMessage());
         }
@@ -28,8 +28,8 @@ public class AutenticacionesController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String correo, @RequestParam String contrasena) {
         try {
-            Optional<Usuarios> usuarios = autenticacionesService.loginUsuario(correo, contrasena);
-            return usuarios.isPresent() ? ResponseEntity.ok(usuarios.get()) : ResponseEntity.status(401).body("Credenciales invalidas");
+            Optional<Usuario> usuario = autenticacionesService.loginUsuario(correo, contrasena);
+            return usuario.isPresent() ? ResponseEntity.ok(usuario.get()) : ResponseEntity.status(401).body("Credenciales invalidas");
         } catch (UsuarioException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }

@@ -1,7 +1,7 @@
 package com.relato.ms_books_payments.services;
 
-import com.relato.ms_books_payments.models.Compras;
-import com.relato.ms_books_payments.repositorys.ComprasRepository;
+import com.relato.ms_books_payments.models.Compra;
+import com.relato.ms_books_payments.repositorys.CompraRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -11,10 +11,10 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 
 @Service
-public class ComprasService {
+public class CompraService {
 
     @Autowired
-    private ComprasRepository compraRepository;
+    private CompraRepository compraRepository;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -26,8 +26,8 @@ public class ComprasService {
     
     private Long stockDisponible;
 
-    public boolean validarCompra(Compras compras) {
-        return compras.getUsuarioId() != null && compras.getLibroId() != null && compras.getCantidad() != null && compras.getCompraFecha() != null;
+    public boolean validarCompra(Compra compra) {
+        return compra.getUsuarioId() != null && compra.getLibroId() != null && compra.getCantidad() != null && compra.getCompraFecha() != null;
     }
     
     public boolean verificarUsuario(Long usuarioId) {
@@ -49,7 +49,7 @@ public class ComprasService {
         return cantidad <= stockDisponible;
     }
     
-    public Compras registrarCompra(Compras compra) {
+    public Compra registrarCompra(Compra compra) {
         ServiceInstance instance = discoveryClient.getInstances("CLOUD-GATEWAY").stream().findFirst().orElse(null);
         if (instance == null) {
             throw new RuntimeException("No instances of CLOUD-GATEWAY found");

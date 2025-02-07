@@ -1,8 +1,8 @@
 package com.relato.ms_books_catalogue.services;
 
 import com.relato.ms_books_catalogue.exceptions.BookNotFoundException;
-import com.relato.ms_books_catalogue.models.Libros;
-import com.relato.ms_books_catalogue.repositorys.LibrosRepository;
+import com.relato.ms_books_catalogue.models.Libro;
+import com.relato.ms_books_catalogue.repositorys.LibroRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,34 +12,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LibrosService {
+public class LibroService {
     @Autowired
-    private LibrosRepository repository;
+    private LibroRepository repository;
 
-    public List<Libros> getAllBooks() {
+    public List<Libro> getAllBooks() {
         return repository.findAll();
     }
 
-    public Libros addBook(Libros libros) {
-        boolean exists = repository.existsByTituloAndAutor(libros.getTitulo(), libros.getAutor());
+    public Libro addBook(Libro libro) {
+        boolean exists = repository.existsByTituloAndAutor(libro.getTitulo(), libro.getAutor());
         if (exists) {
             throw new BookNotFoundException("Libro, su titulo y autor ya existen.");
         }
-        return repository.save(libros);
+        return repository.save(libro);
     }
 
-    public List<Libros> searchBooks(String keyword) {
+    public List<Libro> searchBooks(String keyword) {
         return repository.searchBooks(keyword);
     }
 
     public Integer getBookQuantityById(Long id) {
         return repository.findById(id)
-                         .map(Libros::getCantidad)
+                         .map(Libro::getCantidad)
                          .orElse(0);
     }
 
-    public Libros getBookById(Long id) {
-        Optional<Libros> libro = repository.findById(id);
+    public Libro getBookById(Long id) {
+        Optional<Libro> libro = repository.findById(id);
         if (libro.isPresent()) {
             return libro.get();
         } else {
@@ -53,9 +53,9 @@ public class LibrosService {
 
     public void updateBookQuantity(Long id, Integer cantidad) {
          repository.findById(id)
-                         .map(libros -> {
-                             libros.setCantidad(cantidad);
-                             return repository.save(libros);
+                         .map(libro -> {
+                             libro.setCantidad(cantidad);
+                             return repository.save(libro);
                          });
     }
 }

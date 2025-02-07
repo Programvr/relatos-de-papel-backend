@@ -3,7 +3,8 @@ package com.relato.ms_books_catalogue.models;
 import jakarta.persistence.*;
 
 @Entity
-public class Libros {
+@Table(name = "Libros")
+public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
